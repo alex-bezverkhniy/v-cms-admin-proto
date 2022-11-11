@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./src/css/pico.min.css" />
+    <link rel="stylesheet" href="./src/css/styles.css" />
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="#" id="sidebar-open" class="secondary" aria-label="Menu"
+            ><svg
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              height="16px"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line></svg
+          ></a>
+        </li>
+        <li><strong>V Headless CMS</strong></li>
+      </ul>
+      <ul>
+        <li>
+          <a
+            href="#"
+            onclick="event.preventDefault()"
+            class="secondary"
+            aria-label="Twitter"
+            >Login</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <aside id="sidebar-menu" class="dismiss hide">
+      <nav>
+        <button id="sidebar-close" aria-label="Open menu">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            height="16px"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <ul>
+          <li><a href="#main">Home</a></li>
+          <li><a href="#users">Users</a></li>
+          <li><a href="">Content</a></li>
+          <li><a href="">Dark</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="container">
+      <article>
+        <h2 id="home">Home</h2>
+        <form>
+          <label for="firstname">
+            First name
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="First name"
+              required
+            />
+          </label>
+
+          <label for="lastname">
+            Last name
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              placeholder="Last name"
+              required
+            />
+          </label>
+
+          <label for="password">
+            Password
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </label>
+
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email address"
+            required
+          />
+
+          <!-- Buttons -->
+          <button type="submit">Save</button>
+        </form>
+      </article>
+      <article>
+        <h2 id="users">New User</h2>
+        <form>
+          <label for="firstname">
+            First name
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="First name"
+              required
+            />
+          </label>
+
+          <label for="lastname">
+            Last name
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              placeholder="Last name"
+              required
+            />
+          </label>
+
+          <label for="password">
+            Password
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </label>
+
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email address"
+            required
+          />
+
+          <!-- Buttons -->
+          <button type="submit">Save</button>
+        </form>
+      </article>
+      <article>
+        <h2>Users list</h2>
+        <figure>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Heading</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+              </tr>
+              <tr>
+                <th scope="row">1</th>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+              </tr>
+              <tr>
+                <th scope="row">1</th>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="col">#</th>
+                <td scope="col">Total</td>
+                <td scope="col">Total</td>
+                <td scope="col">Total</td>
+                <td scope="col">Total</td>
+                <td scope="col">Total</td>
+              </tr>
+            </tfoot>
+          </table>
+        </figure>
+      </article>
+    </main>
+    <footer class="container">
+      <nav aria-label="breadcrumb">
+        <ul>
+          <li>&copy; V Headless CMS</li>
+          <li>
+            <a href=""
+              ><svg
+                class="icon"
+                role="img"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>GitHub</title>
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                />
+              </svg>
+              GitHub</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+    <script src="./src/js/theme-switcher.js"></script>
+    <script src="./src/js/sidebar-close.js"></script>
+  </body>
+</html>
