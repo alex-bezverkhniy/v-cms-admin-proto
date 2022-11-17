@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.html",
   "scripts": {
+    "start-lit": "parcel index-lit.html --open",
     "start": "parcel index.html --open",
     "build": "parcel build index.html"
   },
