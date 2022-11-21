@@ -1,6 +1,6 @@
 import {LitElement, css, html} from 'lit'
-
 export class NavigationBar extends LitElement {    
+
     static properties = {
         globalSyles: {}
     };
@@ -15,7 +15,7 @@ export class NavigationBar extends LitElement {
         <nav>
       <ul>
         <li>
-          <a href="#" id="sidebar-open" class="secondary" aria-label="Menu"
+          <a href="#" @click=${this._toggleSideNav} id="sidebar-open" class="secondary" aria-label="Menu"
             ><svg
               aria-hidden="true"
               focusable="false"
@@ -48,6 +48,17 @@ export class NavigationBar extends LitElement {
       </ul>
     </nav>
         `;
+    }
+    _toggleSideNav() {
+        const event = new CustomEvent('toggled', {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+        });
+        this.dispatchEvent(event);
+        if (event.defaultPrevented) {
+            e.preventDefault();
+        }
     }
 }
 
