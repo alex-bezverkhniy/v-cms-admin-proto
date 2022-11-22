@@ -13,7 +13,7 @@ export class NavigationMenu extends LitElement {
     }
     render() {
         return html`
-        <link rel="stylesheet" href="${this.globalSyles}">        
+        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">        
     <div @toggled=${this._toggleMenu} ><slot></slot></div>    
     <aside id="sidebar-menu" class="${this.showClass}">
       <nav>

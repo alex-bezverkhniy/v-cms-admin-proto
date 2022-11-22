@@ -11,7 +11,7 @@ export class NavigationBar extends LitElement {
     }
     render() {
         return html`
-        <link rel="stylesheet" href="${this.globalSyles}">         
+        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">              
         <nav>
       <ul>
         <li>
