@@ -36,14 +36,30 @@ export class NavigationMenu extends LitElement {
           </svg>
         </button>
         <ul>
-          <li><a href="#main">Home</a></li>
-          <li><a href="#users">Users</a></li>
+          <li><a @click=${this._linkHandler} href="#home">Home</a></li>
+          <li><a @click=${this._linkHandler} href="#users">Users</a></li>
           <li><a href="">Content</a></li>
           <li><a href="">Dark</a></li>
         </ul>
       </nav>
     </aside>
         `
+    }
+
+    _linkHandler(e) {
+      const start = window.location.href.lastIndexOf('#') + 1      
+      const detail = {pagePath: e.target.href.substring(start)};
+      const event = new CustomEvent('clicked', {
+          detail,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+      });
+      this.dispatchEvent(event);
+      this._toggleMenu(e);
+      if (event.defaultPrevented) {
+          e.preventDefault();
+      }
     }
 
     _toggleMenu(e) {      
