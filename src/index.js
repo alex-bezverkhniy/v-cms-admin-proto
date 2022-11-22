@@ -21,10 +21,10 @@ class HomePage extends LitElement {
 
     constructor() {
         super();
-        const start = window.location.href.lastIndexOf('#') + 1
-        const end = window.location.href.length
+        const start = window.location.href.lastIndexOf('#') + 1;
+        const path = window.location.href.substring(start);
         this.globalSyles =  document.styleSheets[0].href;
-        this.path = start == 0 ? 'Home' : window.location.href.substring(start);
+        this.path = path == '' ? 'home' : path;
 
         this.apiClient = new API()
     }
@@ -38,7 +38,7 @@ class HomePage extends LitElement {
         </nav-menu>
         </span>
         <main class="container">            
-            ${this.path != 'home' ? 
+            ${this.path !== 'home' ? 
             html`<entities-list path=${this.path}></entities-list>`
             : 
             html`<h3>${this.path}</h3>`
