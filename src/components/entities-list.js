@@ -1,11 +1,11 @@
-import { LitElement, css, html } from "lit";
+import { css, html } from "lit";
 import { until } from 'lit/directives/until.js';
+import { BaseComponent } from "./base-component";
 
 import {API} from '../api'
 
-class EntitiesList extends LitElement {    
+class EntitiesList extends BaseComponent {    
     static properties = {
-        globalSyles: {},
         path: {},
         data: {},
         ordersConf: {}
@@ -15,17 +15,22 @@ class EntitiesList extends LitElement {
         h3 {
             text-transform: capitalize;      
         } 
+        th>details {
+            min-width: 3em;
+        }
+        th>details>summary {
+            min-width: 2em;
+        }
     `;
 
     constructor() {
         super();
+
         this.apiClient = new API();
         this.ordersConf = {
             orderBy: 'id',
             orderType: 'asc'
         }
-
-        
     }
     
     refreshTable() {
@@ -33,8 +38,7 @@ class EntitiesList extends LitElement {
     }
 
     connectedCallback() {
-        super.connectedCallback()
-        this.globalSyles =  document.styleSheets[0].href;
+        super.connectedCallback() 
         this.refreshTable();        
     }
 
@@ -58,7 +62,7 @@ class EntitiesList extends LitElement {
                     }
                 </a>
             </th>
-            `)} 
+            `)}           
         </tr>
         `
     }
@@ -84,7 +88,7 @@ class EntitiesList extends LitElement {
 
     render() {
         return html`
-        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">
+        ${this.globalSyles}
         <article>
         <h3>${this.path} list</h3>
         ${until(this.data.then((d) => html`
@@ -97,7 +101,29 @@ class EntitiesList extends LitElement {
             <tbody>
             ${d.list.map((item, i) => html`
             <tr>
-                <th scope="row">${i+1}</th>
+                <th scope="row">                
+                <details role="list" dir="rtl">
+                    <summary aria-haspopup="listbox" role="link">${i+1}</summary>
+                    <ul role="listbox">
+                    <li>
+                        <a title="edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="details">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>                        
+                        </a>
+                    </li>
+                    </ul>
+                </details>
+                </th>
                 ${d.schema.columns.map((k) => html `
                 <td >                    
                 ${this.colValue(item[k])}

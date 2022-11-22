@@ -1,9 +1,9 @@
-import { html, LitElement } from "lit";
+import { html } from "lit";
+import { BaseComponent } from "./base-component";
 
-class ThemeSwitcher extends LitElement {
+class ThemeSwitcher extends BaseComponent {
 
-  static properties = {
-    globalSyles: {},
+  static properties = {    
     _scheme: "auto",
     change: {
       light: "<i>Turn on dark mode</i>",
@@ -14,8 +14,7 @@ class ThemeSwitcher extends LitElement {
   }
 
   constructor() {
-    super();
-    this.globalSyles =  document.styleSheets[0].href;
+    super();    
     this.scheme = this.schemeFromLocalStorage;
     this.schemeToLocalStorage();
   }
@@ -63,7 +62,7 @@ class ThemeSwitcher extends LitElement {
 
   render() {
     return html`
-    <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">
+    ${this.globalSyles}
     <button @click=${this._toggleSchema} class="contrast switcher theme-switcher" aria-label="Turn off dark mode"><i>Turn off dark mode</i></button>
     `;
   }

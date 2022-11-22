@@ -1,19 +1,18 @@
-import {LitElement, css, html} from 'lit'
+import { html } from 'lit'
+import { BaseComponent } from './base-component';
 
-export class NavigationMenu extends LitElement {    
+export class NavigationMenu extends BaseComponent {    
     static properties = {
-        globalSyles: {},
         isOpen: false,
         showClass: {},
     };
     constructor() {
         super();
-        this.globalSyles =  document.styleSheets[0].href;
         this.showClass = 'hide';
     }
     render() {
         return html`
-        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">        
+        ${this.globalSyles}
     <div @toggled=${this._toggleMenu} ><slot></slot></div>    
     <aside id="sidebar-menu" class="${this.showClass}">
       <nav>

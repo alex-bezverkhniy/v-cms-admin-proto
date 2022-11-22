@@ -1,18 +1,15 @@
-import {LitElement, css, html} from 'lit'
+import {html} from 'lit'
+import { BaseComponent } from "./base-component";
 import './theme-switcher'
-export class NavigationBar extends LitElement {    
 
-    static properties = {
-        globalSyles: {}
-    };
-
+export class NavigationBar extends BaseComponent {
     constructor() {
-        super();
-        this.globalSyles =  document.styleSheets[0].href;
+        super();        
     }
+    
     render() {
         return html`
-        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">
+        ${this.globalSyles}
         <nav>
       <ul>
         <li>
