@@ -1,11 +1,16 @@
 import {LitElement, html, css} from 'lit';
 import './components/navbar'
 import './components/navmenu'
+import './components/entities-list'
+import {API} from './api'
 
 class HomePage extends LitElement {
+    apiClient;
+
     static properties = {
         globalSyles: {},
-        path: {}
+        path: {},
+        data: {},
     };
 
     static styles = css`
@@ -21,6 +26,7 @@ class HomePage extends LitElement {
         this.globalSyles =  document.styleSheets[0].href;
         this.path = start == 0 ? 'Home' : window.location.href.substring(start);
 
+        this.apiClient = new API()
     }
 
     render() {
@@ -31,14 +37,23 @@ class HomePage extends LitElement {
             <nav-bar></nav-bar>            
         </nav-menu>
         </span>
-        <article>
-        <h3>${this.path}</h3>
-        </article>
+        <main class="container">            
+            ${this.path != 'home' ? 
+            html`<entities-list path=${this.path}></entities-list>`
+            : 
+            html`<h3>${this.path}</h3>`
+            }
+        </main>
         `;
+    }
+
+    fetchData(path) {
+        this.listData = this.apiClient.fetchData(path)
     }
 
     _routeHandler(e) {        
         this.path = e.detail.pagePath;
+        this.fetchData(this.path);
     }
 }
 

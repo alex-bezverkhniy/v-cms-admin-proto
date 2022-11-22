@@ -13,7 +13,7 @@ nav {
   left: 0;
   padding: 0 var(--spacing);
   background-color: var(--card-background-color);
-  box-shadow: var(--card-box-shadow);
+  /* box-shadow: var(--card-box-shadow); */
 }
 nav {
   justify-content: space-between;

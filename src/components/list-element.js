@@ -1,3 +1,5 @@
+// DEPRECATED
+
 import {LitElement, css, html} from 'lit'
 import {live} from 'lit/directives/live.js'
 import { until } from 'lit/directives/until.js';
