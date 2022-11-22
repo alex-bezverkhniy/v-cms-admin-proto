@@ -1,105 +1,78 @@
-(function () {
-  var e = {
-      _scheme: "auto",
-      change: {
-        light: "<i>Turn on dark mode</i>",
-        dark: "<i>Turn off dark mode</i>"
-      },
-      buttonsTarget: ".theme-switcher",
-      localStorageKey: "picoPreferedColorScheme",
-      init() {
-        (this.scheme = this.schemeFromLocalStorage), this.initSwitchers();
-      },
-      get schemeFromLocalStorage() {
-        return void 0 !== window.localStorage &&
-          null !== window.localStorage.getItem(this.localStorageKey)
-          ? window.localStorage.getItem(this.localStorageKey)
-          : this._scheme;
-      },
-      get preferedColorScheme() {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-      },
-      initSwitchers() {
-        document.querySelectorAll(this.buttonsTarget).forEach((e) => {
-          e.addEventListener(
-            "click",
-            () => {
-              "dark" == this.scheme
-                ? (this.scheme = "light")
-                : (this.scheme = "dark");
-            },
-            !1
-          );
-        });
-      },
-      addButton(e) {
-        var t = document.createElement(e.tag);
-        (t.className = e.class),
-          document.querySelector(e.target).appendChild(t);
-      },
-      set scheme(e) {
-        "auto" == e
-          ? "dark" == this.preferedColorScheme
-            ? (this._scheme = "dark")
-            : (this._scheme = "light")
-          : ("dark" != e && "light" != e) || (this._scheme = e),
-          this.applyScheme(),
-          this.schemeToLocalStorage();
-      },
-      get scheme() {
-        return this._scheme;
-      },
-      applyScheme() {
-        document.querySelector("html").setAttribute("data-theme", this.scheme),
-          document.querySelectorAll(this.buttonsTarget).forEach((e) => {
-            var t =
-              "dark" == this.scheme ? this.change.dark : this.change.light;
-            (e.innerHTML = t),
-              e.setAttribute("aria-label", t.replace(/<[^>]*>?/gm, ""));
-          });
-      },
-      schemeToLocalStorage() {
-        void 0 !== window.localStorage &&
-          window.localStorage.setItem(this.localStorageKey, this.scheme);
-      }
+import { html, LitElement } from "lit";
+
+class ThemeSwitcher extends LitElement {
+
+  static properties = {
+    globalSyles: {},
+    _scheme: "auto",
+    change: {
+      light: "<i>Turn on dark mode</i>",
+      dark: "<i>Turn off dark mode</i>"
     },
-    t = {
-      _state: "closed-on-mobile",
-      toggleLink: document.getElementById("toggle-docs-navigation"),
-      nav: document.querySelector("main > aside > nav"),
-      init() {
-        this.onToggleClick();
-      },
-      onToggleClick() {
-        if (this.toggleLink) {
-          this.toggleLink.addEventListener(
-            "click",
-            (e) => {
-              e.preventDefault(),
-                "closed-on-mobile" == this.state
-                  ? (this.state = "open")
-                  : (this.state = "closed-on-mobile"),
-                this.nav.removeAttribute("class"),
-                this.nav.classList.add(this.state);
-            },
-            !1
-          );
-        }
-      },
-      get state() {
-        return this._state;
-      },
-      set state(e) {
-        this._state = e;
-      }
-    };
-  e.addButton({
-    tag: "BUTTON",
-    class: "contrast switcher theme-switcher",
-    target: "nav"
-  }),
-    e.init(),
-    t.init();
-})();
+    buttonsTarget: ".theme-switcher",
+    localStorageKey: "picoPreferedColorScheme",
+  }
+
+  constructor() {
+    super();
+    this.globalSyles =  document.styleSheets[0].href;
+    this.scheme = this.schemeFromLocalStorage;
+    this.schemeToLocalStorage();
+  }
+
+  get schemeFromLocalStorage() {
+    return void 0 !== window.localStorage &&
+      null !== window.localStorage.getItem(this.localStorageKey)
+      ? window.localStorage.getItem(this.localStorageKey)
+      : this._scheme;
+  }
+
+  get preferedColorScheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+  set scheme(e) {
+    "auto" == e
+      ? "dark" == this.preferedColorScheme
+        ? (this._scheme = "dark")
+        : (this._scheme = "light")
+      : ("dark" != e && "light" != e) || (this._scheme = e),
+      this.applyScheme(),
+      this.schemeToLocalStorage();
+  }
+
+  get scheme() {
+    return this._scheme;
+  }
+
+  schemeToLocalStorage() {
+    void 0 !== window.localStorage &&
+      window.localStorage.setItem(this.localStorageKey, this.scheme);
+  }
+  
+  applyScheme() {
+    document.querySelector("html").setAttribute("data-theme", this.scheme),
+      document.querySelectorAll(this.buttonsTarget).forEach((e) => {
+        var t =
+          "dark" == this.scheme ? this.change.dark : this.change.light;
+        (e.innerHTML = t),
+          e.setAttribute("aria-label", t.replace(/<[^>]*>?/gm, ""));
+      });
+  }
+
+  render() {
+    return html`
+    <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">
+    <button @click=${this._toggleSchema} class="contrast switcher theme-switcher" aria-label="Turn off dark mode"><i>Turn off dark mode</i></button>
+    `;
+  }
+
+  _toggleSchema(e) {    
+      "dark" == this.scheme
+        ? (this.scheme = "light")
+        : (this.scheme = "dark");    
+  }
+}
+
+customElements.define('theme-switcher', ThemeSwitcher);

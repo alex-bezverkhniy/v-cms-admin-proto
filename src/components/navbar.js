@@ -1,4 +1,5 @@
 import {LitElement, css, html} from 'lit'
+import './theme-switcher'
 export class NavigationBar extends LitElement {    
 
     static properties = {
@@ -11,7 +12,7 @@ export class NavigationBar extends LitElement {
     }
     render() {
         return html`
-        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">              
+        <link rel="stylesheet" href="${this.globalSyles == undefined ? '' : this.globalSyles}">
         <nav>
       <ul>
         <li>
@@ -45,8 +46,9 @@ export class NavigationBar extends LitElement {
             >Login</a
           >
         </li>
-      </ul>
+      </ul>      
     </nav>
+    <theme-switcher></theme-switcher>
         `;
     }
     _toggleSideNav() {
