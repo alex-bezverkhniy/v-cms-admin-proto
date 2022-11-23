@@ -32,7 +32,12 @@ export class API {
                 }
             }).filter(f => f != undefined);
             
-            const res = {list: arr[0], schema: {
+            const res = {
+                entity: {
+                    id: 0,
+                },
+                list: arr[0], 
+                schema: {
                     ...schema,
                     title: schema.title,
                     required: schema.required,

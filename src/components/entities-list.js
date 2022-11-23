@@ -1,14 +1,24 @@
 import { css, html } from "lit";
 import { until } from 'lit/directives/until.js';
 import { BaseComponent } from "./base-component";
+import './entity-details'
 
 import {API} from '../api'
 
 class EntitiesList extends BaseComponent {    
+    isOpenClass;
+    openingClass;
+    closingClass;
+    animationDuration;
+    visibleModal;
+    
+
+
     static properties = {
         path: {},
         data: {},
-        ordersConf: {}
+        ordersConf: {},
+        selectedEntityIdx: -1,
     };
 
     static styles = css`
@@ -31,6 +41,13 @@ class EntitiesList extends BaseComponent {
             orderBy: 'id',
             orderType: 'asc'
         }
+
+        this.isOpenClass = 'modal-is-open';
+        this.openingClass = 'modal-is-opening';
+        this.closingClass = 'modal-is-closing';
+        this.animationDuration = 400; // ms
+        this.visibleModal;   
+        this.selectedEntityIdx = -1; 
     }
     
     refreshTable() {
@@ -101,16 +118,17 @@ class EntitiesList extends BaseComponent {
             <tbody>
             ${d.list.map((item, i) => html`
             <tr>
-                <th scope="row">                
+                <th scope="row">               
+                    <!-- Button to trigger the modal -->
                 <details role="list" dir="rtl">
                     <summary aria-haspopup="listbox" role="link">${i+1}</summary>
                     <ul role="listbox">
                     <li>
-                        <a title="edit">
+                        <a title="edit" @click=${this.toggleModal} index=${i} href="#details" role="link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                        </svg>
+                        </svg>                        
                         </a>
                     </li>
                     <li>
@@ -136,8 +154,36 @@ class EntitiesList extends BaseComponent {
                 ${this.tableColsHeaders(d.schema.columns)}
             </tfoot>
             </table>
-        </figure> 
+        </figure>
+        <!-- Modal -->
+        <dialog id="modal-dlg">
+        <article>
+            <a href="#close"
+            aria-label="Close"
+            class="close"
+            
+            @click=${this.toggleModal}>
+            </a>
+            <h3>details</h3>
+            ${until(this.data.then((d) => html`
+            idx: ${this.selectedEntityIdx}
+            
+            <p>
+            Cras sit amet maximus risus. 
+            Pellentesque sodales odio sit amet augue finibus pellentesque. 
+            Nullam finibus risus non semper euismod.
+            </p>
+            `), html`Loading...`)} 
+            <footer>
+            <a href="#close"
+                role="button"
+                class="secondary"
+                @click=${this.toggleModal}>
+                Close
+            </a>      
+            </footer>
         </article>
+        </dialog>
         `), html`Loading...`)} 
         `;
     }
@@ -151,6 +197,33 @@ class EntitiesList extends BaseComponent {
         };
         this.refreshTable();
         e.preventDefault();
+    }
+    
+    // Toggle modal
+    toggleModal (event){
+        event.stopPropagation();
+        this.selectedEntityIdx = event.target.attributes['index'] ? event.target.attributes['index'].value : -1
+        console.log('idx', event.target.attributes['index'].value );
+        const modal = this.renderRoot.getElementById("modal-dlg");
+        (typeof(modal) != 'undefined' && modal != null)
+          && this.isModalOpen(modal) ? this.closeModal(modal) : this.openModal(modal)
+        event.preventDefault();
+        }
+      
+    // Is modal open
+    isModalOpen(modal) {
+        return modal.hasAttribute('open') && modal.getAttribute('open') != 'false' ? true : false;
+    }
+  
+    // Open modal
+    openModal(modal) {
+        modal.setAttribute('open', true);
+    }
+    
+    // Close modal
+    closeModal(modal) {
+        this.visibleModal = null;
+        modal.removeAttribute('open');
     }
     
 }

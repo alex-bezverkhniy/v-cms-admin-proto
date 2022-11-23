@@ -24,7 +24,7 @@ class HomePage extends LitElement {
         const start = window.location.href.lastIndexOf('#') + 1;
         const path = window.location.href.substring(start);
         this.globalSyles =  document.styleSheets[0].href;
-        this.path = path == '' ? 'home' : path;
+        this.path = path == '' || path.startsWith('http') ? 'home' : path;
 
         this.apiClient = new API()
     }
